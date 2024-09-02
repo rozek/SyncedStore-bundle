@@ -4,7 +4,7 @@ export * from 'yjs'
 import {
   syncedStore, SyncedDoc,SyncedArray,SyncedMap,SyncedXml,SyncedText, Box,boxed,
   observeDeep, areSame, 
-  getYjsDoc,getYjsValue
+  Y, getYjsDoc,getYjsValue
 } from "@syncedstore/core"
 // @ts-ignore 
 import { PREFERRED_TRIM_SIZE, fetchUpdates, storeState, clearDocument, IndexeddbPersistence } from 'y-indexeddb'
@@ -27,5 +27,5 @@ export {
   Observable,
   syncedStore, SyncedDoc,SyncedArray,SyncedMap,SyncedXml,SyncedText, Box,boxed,
   observeDeep, areSame, 
-  getYjsDoc,getYjsValue
+  Y, getYjsDoc,getYjsValue
 }
