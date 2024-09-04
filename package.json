@@ -14,7 +14,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "rimraf dist && rollup -c rollup.config.js && tsc && mv src/*.d.ts dist && rm -r dist/src && rm src/*.js*",
+    "build": "rimraf dist && rollup -c rollup.config.js && tsc && mv src/*.d.ts dist && rm -r dist/src && rm src/*.js* && rimraf dist/src",
     "agadoo": "agadoo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
