@@ -37,9 +37,50 @@ It currently bundles
 
 into a single monolith.
 
+## Usage ##
 
-(documentation follows)
+As a consequence, import statements like those shown above will either have to be rewritten as
 
+```
+import * as Y                from 'https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js'
+import { WebsocketProvider } from 'https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js'
+import { YKeyValue }         from 'https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js'
+import { LWWMap }            from 'https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js'
+import { syncedStore }       from 'https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js'
+```
+
+or - and that's the **recommended approach** - you will have to provide an importmap with the following contents:
+
+```
+<script type="importmap">
+{
+  "imports": {
+    "yjs":                 "https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js",
+    "y-indexeddb":         "https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js",
+    "y-websocket":         "https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js",
+    "y-webrtc":            "https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js",
+    "y-utility/y-keyvalue":"https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js",
+    "y-lwwmap":            "https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js",
+    "@syncedstore/core":   "https://rozek.github.io/SyncedStore-bundle/dist/SyncedStore-bundle.esm.js"
+  }
+}
+</script>
+```
+
+and use the same import statements as shown in the docs.
+
+The **potential disadvantage of importmaps**, however, is that you - or your customers - will need a reasonably modern browser. Definitely supported browsers include:
+
+* Chrome ≥ 89
+* MS Edge ≥ 89
+* Safari ≥ 16.4
+* Firefox ≥ 108
+* Opera ≥ 76
+<br>&nbsp;<br>
+* Chrome for Android ≥ 111
+* Safari on iOS ≥ 16.4
+
+(see "[Can I use](https://caniuse.com/import-maps)" for additional details, especially if your browser is not listed above)
 
 ## Build Instructions ##
 
