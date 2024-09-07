@@ -2,6 +2,8 @@
 
 bundles [SyncedStore](https://github.com/YousefED/SyncedStore), [yjs](https://github.com/yjs/yjs) and several related packages into a single module that can be used in no-build environments
 
+> Just a small note: if you like this module and plan to use it, consider "starring" this repository (you will find the "Star" button on the top right of this page), so that I know which of my repositories to take most care of.
+
 ## Background ##
 
 When using [Yjs](https://github.com/yjs/yjs) and depending modules in a browser (or another no-build environment, typical import statements such as
