@@ -49,7 +49,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@syncedstore/core": "^0.6.0",
+  	"@syncedstore/core": "https://github.com/rozek/SyncedStore/raw/main/packages/core/syncedstore-core-0.6.0.tgz",
     "y-indexeddb": "github:rozek/y-indexeddb",
     "y-lwwmap": "^0.1.9",
     "y-utility": "github:rozek/y-utility",
