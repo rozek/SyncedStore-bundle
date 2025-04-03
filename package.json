@@ -1,6 +1,6 @@
 {
   "name": "SyncedStore-bundle",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "bundles SyncedStore, yjs and several related packages into a single module that can be used in no-build environments",
   "type": "module",
   "module": "./dist/SyncedStore-bundle.esm.js",
