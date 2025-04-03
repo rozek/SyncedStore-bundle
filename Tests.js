@@ -1,8 +1,8 @@
-import * as Y                from './dist/SyncedStore-bundle.esm.js'
-import { LWWMap }            from './dist/SyncedStore-bundle.esm.js'
-import { syncedStore }       from './dist/SyncedStore-bundle.esm.js'
-import { Observable }        from './dist/SyncedStore-bundle.esm.js'
-import { getYjsDoc }         from './dist/SyncedStore-bundle.esm.js'
+import * as Y                 from './dist/SyncedStore-bundle.esm.js'
+import { LWWMap,getYjsValue } from './dist/SyncedStore-bundle.esm.js'
+import { syncedStore }        from './dist/SyncedStore-bundle.esm.js'
+import { Observable }         from './dist/SyncedStore-bundle.esm.js'
+import { getYjsDoc }          from './dist/SyncedStore-bundle.esm.js'
 
 /**** MockSyncProvider - used to simulate synchronization without actual network ****/
 
@@ -29,8 +29,6 @@ class MockSyncProvider extends Observable {
     this.connected = true
     
     if (this.UpdateQueue.length > 0) {            // process any queued messages
-//      console.log(`submitting ${this.UpdateQueue.length} queued Messages`)
-
       const UpdateQueue = [...this.UpdateQueue]; this.UpdateQueue = []
       UpdateQueue.forEach((Update) => {  // send pending updates to all partners
         this.SyncPartners.forEach((Partner) => {
@@ -85,7 +83,6 @@ class MockSyncProvider extends Observable {
         Partner._receiveUpdate(Update,this)
       })
     } else {                     // queue update for when connection is restored
-//      console.log('enqueuing update for when connection is established')
       this.UpdateQueue.push(Update)
     }
   }
@@ -351,16 +348,16 @@ class MockSyncProvider extends Observable {
   /**** create stores with various data types ****/
 
     const StoreA = syncedStore({
-      LWWMap:  {},
-      KeyValue:{},
-      longText:'text',
-      nestedStructure:{}
+      LWWMapVector:[],
+      KeyValue:    {},
+      longText:    'text',
+      nestedStructure:{} // contents of nested structures are automatically observed
     })
     
     const StoreB = syncedStore({
-      LWWMap:  {},
-      KeyValue:{},
-      longText:'text',
+      LWWMapVector:[],
+      KeyValue:    {},
+      longText:    'text',
       nestedStructure:{} // contents of nested structures are automatically observed
     })
     
@@ -385,6 +382,8 @@ class MockSyncProvider extends Observable {
     
   /**** test nested structures ****/
     
+    const LWWMapA = new LWWMap(getYjsValue(StoreA.LWWMapVector))
+      LWWMapA.set('Key','Value')
     StoreA.nestedStructure.Arrays = [[],[]]
     StoreA.nestedStructure.Maps   = { first:{}, second:{} }
 
@@ -392,7 +391,10 @@ class MockSyncProvider extends Observable {
     StoreA.nestedStructure.Maps.first.Prop = 'nested property' // should trigger update
     
   /**** verify synchronization of all types ****/
-    
+       
+    const LWWMapB = new LWWMap(getYjsValue(StoreB.LWWMapVector))
+    console.assert(LWWMapB.get('Key') === 'Value', 'LWWMap should sync')
+
     console.assert(StoreB.KeyValue.User === 'alice',                 'Key-Value should sync')
     console.assert(StoreB.longText.toString().includes('multi-line'),'Text should sync')
     console.assert(StoreB.nestedStructure.Arrays[0].length === 2,    'Arrays should sync')
